@@ -1,10 +1,11 @@
 package org.wcs.checkpoint2.carnetvoyage.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Destination {
@@ -12,9 +13,13 @@ public class Destination {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    private LocalDate start;
-    private LocalDate end;
+    private LocalDate destinationStart;
+    private LocalDate destinationEnd;
     private String country;
+
+    @OneToMany(mappedBy = "cdVDestination")
+    @JsonManagedReference
+    private final List<Etape> etapeList = new ArrayList<>();
 
     public String getCountry() {
         return country;
@@ -32,19 +37,23 @@ public class Destination {
         this.id = id;
     }
 
-    public LocalDate getStart() {
-        return start;
+    public LocalDate getDestinationStart() {
+        return destinationStart;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setDestinationStart(LocalDate destinationStart) {
+        this.destinationStart = destinationStart;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public LocalDate getDestinationEnd() {
+        return destinationEnd;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    public void setDestinationEnd(LocalDate destinationEnd) {
+        this.destinationEnd = destinationEnd;
+    }
+
+    public List<Etape> getEtapeList() {
+        return etapeList;
     }
 }
